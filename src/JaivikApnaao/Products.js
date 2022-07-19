@@ -23,6 +23,9 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PaymentIcon from "@mui/icons-material/Payment";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import ProductDisplay from "./ProductComponents/ProductDisplay";
+import Cart from "./ProductComponents/Cart";
+import MyOrders from "./ProductComponents/MyOrders";
+import Payments from "./ProductComponents/Payments";
 
 const drawerWidth = 240;
 
@@ -133,6 +136,8 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+
+
 const Products = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -235,7 +240,10 @@ const Products = () => {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <ProductDisplay/>
+        {head === "Products" && <ProductDisplay/>}
+        {head === "My Cart" && <Cart/>}
+        {head === "My Orders" && <MyOrders/>}
+        {head === "Payments" && <Payments/>}
       </Box>
     </Box>
   );
