@@ -13,10 +13,13 @@ import {
   Checkbox,
   Container,
 } from "@mui/material";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import AppForm from "../AppForm";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
+import axios from 'axios';
+import useSignUpForm from "./CustomHooks/SignUpCustHook";
+import { useNavigate } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,9 +55,25 @@ function a11yProps(index) {
 }
 
 const SignUp = () => {
-  const [sent, setSent] = React.useState(false);
 
-  const handleSubmit = () => {
+  const nav = useNavigate();
+
+  const [sent, setSent] = useState(false);
+
+  const signup = () => {
+    (async () =>{
+        await axios.post('http://localhost:5000/api/auth/register', inputs)
+            .then((result) => {
+              console.log(result);
+                nav("/sign-in");
+            }).catch((err) => {
+              console.log(err.message);
+            });
+      })();
+  }
+  const {inputs, SignUpFormSubmit, SignUpFormChange} = useSignUpForm(signup);
+
+  const MobilehandleSubmit = () => {
     setSent(true);
   };
 
@@ -114,8 +133,9 @@ const SignUp = () => {
                 >
                   <Box
                     component="form"
-                    noValidate
-                    onSubmit={handleSubmit}
+                    // noValidate
+                    // method="post"
+                    onSubmit={SignUpFormSubmit}
                     // sx={{ mt: 3 }}
                   >
                     <Grid container spacing={2}>
@@ -128,6 +148,8 @@ const SignUp = () => {
                           id="firstName"
                           label="First Name"
                           autoFocus
+                          onChange={SignUpFormChange}
+                          value={inputs.firstName}
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -138,6 +160,8 @@ const SignUp = () => {
                           label="Last Name"
                           name="lastName"
                           autoComplete="family-name"
+                          onChange={SignUpFormChange}
+                          value={inputs.lastName}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -148,6 +172,8 @@ const SignUp = () => {
                           label="Email Address"
                           name="email"
                           autoComplete="email"
+                          onChange={SignUpFormChange}
+                          value={inputs.email}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -159,6 +185,21 @@ const SignUp = () => {
                           type="password"
                           id="password"
                           autoComplete="new-password"
+                          onChange={SignUpFormChange}
+                          value={inputs.password}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          name="confpassword"
+                          label="Confirm Password"
+                          type="password"
+                          id="confpassword"
+                          // autoComplete="new-password"
+                          onChange={SignUpFormChange}
+                          value={inputs.confpassword}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -206,7 +247,7 @@ const SignUp = () => {
                   <Box
                     component="form"
                     noValidate
-                    onSubmit={handleSubmit}
+                    onSubmit={MobilehandleSubmit}
                     // sx={{ mt: 3 }}
                   >
                     <Typography component="h3" variant="h5" sx={{mb: "2em"}}>

@@ -17,6 +17,9 @@ import React from 'react'
 import AppForm from '../AppForm';
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
+import useSignInForm from "./CustomHooks/SignInCustHook";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,11 +56,24 @@ function a11yProps(index) {
 
 
 const SignIn = () => {
+
+  const nav = useNavigate();
+
   const [sent, setSent] = React.useState(false);
 
-  const handleSubmit = () => {
-    setSent(true);
-  };
+  const signin = () => {
+    (async () =>{
+        await axios.post('http://localhost:5000/api/auth/login', inputs)
+            .then((result) => {
+              const token = result.data.token;
+              console.log(token);
+                // nav("/products");
+            }).catch((err) => {
+              console.log(err.message);
+            });
+      })();
+  }
+  const {inputs, SignInFormSubmit, SignInFormChange} = useSignInForm(signin);
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -115,7 +131,7 @@ const SignIn = () => {
                   <Box
                     component="form"
                     noValidate
-                    onSubmit={handleSubmit}
+                    onSubmit={SignInFormSubmit}
                     // sx={{ mt: 3 }}
                   >
                     <Grid container spacing={2}>
@@ -127,6 +143,8 @@ const SignIn = () => {
                           label="Email Address"
                           name="email"
                           autoComplete="email"
+                          onChange={SignInFormChange}
+                          value={inputs.email}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -138,6 +156,8 @@ const SignIn = () => {
                           type="password"
                           id="password"
                           autoComplete="new-password"
+                          onChange={SignInFormChange}
+                          value={inputs.password}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -185,7 +205,7 @@ const SignIn = () => {
                   <Box
                     component="form"
                     noValidate
-                    onSubmit={handleSubmit}
+                    // onSubmit={}
                     // sx={{ mt: 3 }}
                   >
                     <Typography component="h3" variant="h5" sx={{mb: "2em"}}>
