@@ -55,7 +55,7 @@ function a11yProps(index) {
 }
 
 
-const SignIn = () => {
+const SignIn = (props) => {
 
   const nav = useNavigate();
 
@@ -67,6 +67,22 @@ const SignIn = () => {
             .then((result) => {
               const token = result.data.token;
               console.log(token);
+
+              (async () =>{
+                const loginToken = {
+                  headers: {
+                  'Authorization': token,
+                  },
+                }
+                await axios.get('http://localhost:5000/api/auth/profile', loginToken)
+                  .then((result) => {
+                    console.log("user: ", result);
+                    props.islogin(true);
+                    props.userdata(result.data);
+                  }).catch((err) => {
+                    console.log(err.message);
+                  });
+              })();
                 // nav("/products");
             }).catch((err) => {
               console.log(err.message);

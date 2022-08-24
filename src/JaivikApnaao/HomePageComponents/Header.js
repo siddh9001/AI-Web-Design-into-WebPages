@@ -9,6 +9,7 @@ import {
   Tab,
   Tabs,
   Toolbar,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -26,8 +27,7 @@ function LinkTab(props) {
   );
 }
 
-const Header = () => {
-
+const Header = (props) => {
   const [value, setValue] = useState();
   const tabChange = (e, value) => {
     setValue(value);
@@ -42,7 +42,7 @@ const Header = () => {
   console.log(isMatch);
 
   return (
-    <Box component="section" sx={{zIndex: 1}}>
+    <Box component="section" sx={{ zIndex: 1 }}>
       <AppBar>
         <Toolbar>
           <Link href="http://localhost:3000/">
@@ -65,21 +65,60 @@ const Header = () => {
                 onChange={tabChange}
                 TabIndicatorProps={tabIndicatorStyleObject}
               >
-                <LinkTab value="1" label="About"  href="http://localhost:3000/"/>
-                <LinkTab value="2" label="Products"  href="/products"/>
-                <LinkTab value="3" label="Videos"  href="/videos"/>
-                <LinkTab value="4" label="Contact Us"  href="/contactus"/>
+                <LinkTab
+                  value="1"
+                  label="About"
+                  href="http://localhost:3000/"
+                />
+                <LinkTab value="2" label="Products" href="/products" />
+                <LinkTab value="3" label="Videos" href="/videos" />
+                <LinkTab value="4" label="Contact Us" href="/contactus" />
               </Tabs>
-              <Stack spacing={2} direction="row" sx={{ marginLeft: "auto" }}>
-              <Button component="a" variant="outlined" color="inherit" href="/sign-in">
-                  {" "}
-                  {"LOGIN"}{" "}
-             
-                </Button>
-                <Button component="a" variant="outlined" color="inherit" href="/sign-up">
-                  {"SIGN UP"}
-                </Button>
-              </Stack>
+              {props.islogin ? (
+                <>
+                  <Stack
+                    spacing={2}
+                    direction="row"
+                    sx={{ marginLeft: "auto" }}
+                  >
+                    <Typography>{props.userdata.email}</Typography>
+                    <Button
+                      component="a"
+                      variant="outlined"
+                      color="inherit"
+                      href="#"
+                    >
+                      {"SIGN OUT"}
+                    </Button>
+                  </Stack>
+                </>
+              ) : (
+                <>
+                  <Stack
+                    spacing={2}
+                    direction="row"
+                    sx={{ marginLeft: "auto" }}
+                  >
+                    <Button
+                      component="a"
+                      variant="outlined"
+                      color="inherit"
+                      href="/sign-in"
+                    >
+                      {" "}
+                      {"LOGIN"}{" "}
+                    </Button>
+                    <Button
+                      component="a"
+                      variant="outlined"
+                      color="inherit"
+                      href="/sign-up"
+                    >
+                      {"SIGN UP"}
+                    </Button>
+                  </Stack>
+                </>
+              )}
             </>
           )}
         </Toolbar>

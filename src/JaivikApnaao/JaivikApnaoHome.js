@@ -6,20 +6,29 @@ import Header from './HomePageComponents/Header';
 import Products from './Products';
 import Videos from './Videos';
 import ContactUs from './ContactUs';
+import { useEffect, useState } from 'react';
 
 
 function JaivikApnaoHome() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [userData, setUserData] = useState({});
+
+  // useEffect((e) => {
+    // e.preventDefault();
+  console.log(isLogin);
+  console.log(userData);
+  // }, [isLogin]);
   
   return (
     <>
       <Router>
-      <Header/>
+      <Header islogin={isLogin} userdata={userData}/>
         <Routes>
         <Route exact path='/'  element={<Home />} />
         <Route path='/products' element={<Products/>} />
         <Route path='/videos' element={<Videos />} />
         <Route path='/contactus' element={<ContactUs />} />
-        <Route path='/sign-in' element={<SignIn />} />
+        <Route path='/sign-in' element={<SignIn islogin={setIsLogin} userdata={setUserData}/>}/>
         <Route path='/sign-up' element={<SignUp />} />
         </Routes>
       </Router>
