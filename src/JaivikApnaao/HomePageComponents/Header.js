@@ -14,6 +14,7 @@ import {
   useTheme,
 } from "@mui/material";
 import DrawerComp from "./DrawerComp";
+import { useNavigate } from "react-router-dom";
 
 function LinkTab(props) {
   return (
@@ -40,6 +41,13 @@ const Header = (props) => {
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   console.log(isMatch);
+
+  const navigate = useNavigate();
+  const onLogout = () => {
+      props.setIsLogin(false);
+      navigate('/');
+      // callback()
+  }
 
   return (
     <Box component="section" sx={{ zIndex: 1 }}>
@@ -81,12 +89,12 @@ const Header = (props) => {
                     direction="row"
                     sx={{ marginLeft: "auto" }}
                   >
-                    <Typography>{props.userdata.email}</Typography>
+                    <Typography sx={{textAlign: "center"}}>{props.userdata.email}</Typography>
                     <Button
-                      component="a"
+                      // component="a"
                       variant="outlined"
                       color="inherit"
-                      href="#"
+                      onClick={onLogout}
                     >
                       {"SIGN OUT"}
                     </Button>

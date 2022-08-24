@@ -22,7 +22,7 @@ function JaivikApnaoHome() {
   return (
     <>
       <Router>
-      <Header islogin={isLogin} userdata={userData}/>
+      <Header islogin={isLogin} setIsLogin={setIsLogin} userdata={userData}/>
         <Routes>
         <Route exact path='/'  element={<Home />} />
         <Route path='/products' element={<Products/>} />
