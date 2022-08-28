@@ -29,6 +29,9 @@ function LinkTab(props) {
 }
 
 const Header = (props) => {
+  
+  console.log("islogin : ", props.islogin);
+
   const [value, setValue] = useState();
   const tabChange = (e, value) => {
     setValue(value);

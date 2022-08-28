@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 function JaivikApnaoHome() {
   const [isLogin, setIsLogin] = useState(false);
   const [userData, setUserData] = useState({});
+  // const [token, setToken] = useState("");
 
   // useEffect((e) => {
     // e.preventDefault();
@@ -28,7 +29,7 @@ function JaivikApnaoHome() {
         <Route path='/products' element={<Products/>} />
         <Route path='/videos' element={<Videos />} />
         <Route path='/contactus' element={<ContactUs />} />
-        <Route path='/sign-in' element={<SignIn islogin={setIsLogin} userdata={setUserData}/>}/>
+        <Route path='/sign-in' element={<SignIn islogin={isLogin} setIsLogin={setIsLogin} userdata={setUserData}/>}/>
         <Route path='/sign-up' element={<SignUp />} />
         </Routes>
       </Router>
