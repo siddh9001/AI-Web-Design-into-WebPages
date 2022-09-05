@@ -1,37 +1,79 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, {useState, useEffect, useContext, createContext } from "react";
 
-const AuthFunc = (props) => {
-  // const navigate = useNavigate();
-  // const signin = () => {
-  //   (async () =>{
-  //       await axios.post('http://localhost:5000/api/auth/login', inputs)
-  //           .then((result) => {
-  //             props.setToken = result.data.token;
-  //             console.log(props.token);
+const authContext = createContext();
 
-  //             (async () =>{
-  //               const loginToken = {
-  //                 headers: {
-  //                 'Authorization': props.token,
-  //                 },
-  //               }
-  //               await axios.get('http://localhost:5000/api/auth/profile', loginToken)
-  //                 .then((result) => {
-  //                   console.log("user: ", result);
-  //                   props.setIsLogin(true);
-  //                   props.userdata(result.data);
-  //                   navigate('/');
-  //                 }).catch((err) => {
-  //                   console.log(err.message);
-  //                 });
-  //             })();
-              
-  //           }).catch((err) => {
-  //             console.log(err.message);
-  //           });
-  //     })();
-  // }
+// Provider component that wraps your app and makes auth object ...
+// ... available to any child component that calls useAuth().
+export function ProvideAuth({ children }) {
+  const auth = useProvideAuth();
+  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+}
+// Hook for child components to get the auth object ...
+// ... and re-render when it changes.
+export const useAuth = () => {
+  return useContext(authContext);
 };
 
-export default AuthFunc;
+export const useProvideAuth = () => {
+
+    const [isLogin, setIsLogin] = useState(false);
+    const [userData, setUserData] = useState({});
+
+    console.log("Userlogin jaivikAppnaao : ", isLogin);
+    console.log("userdata jaivikAppnaao : ", userData);
+
+        const signin =  (inputs) => {
+          console.log("AuthFunc Inputs : ", inputs);
+            (async () =>{
+                await axios.post('http://localhost:5000/api/auth/login', inputs)
+                    .then((result) => {
+                      const token = result.data.token
+                      localStorage.setItem('user', JSON.stringify(token));
+                      console.log(token);
+        
+                      (async () =>{
+                        const loginToken = {
+                          headers: {
+                          'Authorization': token,
+                          },
+                        }
+                        await axios.get('http://localhost:5000/api/auth/profile', loginToken)
+                          .then((result) => {
+                            console.log("user: ", result);
+                            setIsLogin(true);
+                            setUserData(result.data);
+                          }).catch((err) => {
+                            console.log(err.message);
+                          });
+                      })();
+                      
+                    }).catch((err) => {
+                      console.log(err.message);
+                    });
+              })();
+
+        }
+
+        const signup = () => {
+
+        }
+
+        const signout = () => {
+            localStorage.removeItem('user');
+            setUserData({});
+            setIsLogin(false);
+        }
+
+        return {
+            isLogin,
+            userData,
+            setIsLogin,
+            setUserData,
+            signin, 
+            signup,
+            signout,
+        }
+};
+
+export default useProvideAuth;

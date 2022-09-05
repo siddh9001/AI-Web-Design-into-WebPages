@@ -3,7 +3,6 @@ import {
   AppBar,
   Box,
   Button,
-  Link,
   makeStyles,
   Stack,
   Tab,
@@ -14,23 +13,27 @@ import {
   useTheme,
 } from "@mui/material";
 import DrawerComp from "./DrawerComp";
-import { useNavigate } from "react-router-dom";
+import {useNavigate , Link} from "react-router-dom";
+import { useAuth } from "../AuthServices/AuthFunc";
 
 function LinkTab(props) {
+  const navigate = useNavigate();
   return (
     <Tab
       component="a"
       onClick={(event) => {
-        // event.preventDefault();
+         navigate(`${props.to}`);
       }}
       {...props}
     />
   );
 }
 
-const Header = (props) => {
+const Header = () => {
+
+  const auth = useAuth();
   
-  console.log("islogin : ", props.islogin);
+  console.log("islogin Header : ", auth.isLogin);
 
   const [value, setValue] = useState();
   const tabChange = (e, value) => {
@@ -43,20 +46,19 @@ const Header = (props) => {
 
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  console.log(isMatch);
+  // console.log(isMatch);
 
   const navigate = useNavigate();
   const onLogout = () => {
-      props.setIsLogin(false);
+      auth.signout();
       navigate('/');
-      // callback()
   }
 
   return (
     <Box component="section" sx={{ zIndex: 1 }}>
       <AppBar>
         <Toolbar>
-          <Link href="http://localhost:3000/">
+          <Link to="/">
             <Box
               component="img"
               src="https://cdn-icons-png.flaticon.com/512/1598/1598196.png"
@@ -79,20 +81,20 @@ const Header = (props) => {
                 <LinkTab
                   value="1"
                   label="About"
-                  href="http://localhost:3000/"
+                  to="/"
                 />
-                <LinkTab value="2" label="Products" href="/products" />
-                <LinkTab value="3" label="Videos" href="/videos" />
-                <LinkTab value="4" label="Contact Us" href="/contactus" />
+                <LinkTab value="2" label="Products" to="/products" />
+                <LinkTab value="3" label="Videos" to="/videos" />
+                <LinkTab value="4" label="Contact Us" to="/contactus" />
               </Tabs>
-              {props.islogin ? (
+              {auth.isLogin ? (
                 <>
                   <Stack
                     spacing={2}
                     direction="row"
                     sx={{ marginLeft: "auto" }}
                   >
-                    <Typography sx={{textAlign: "center"}}>{props.userdata.email}</Typography>
+                    <Typography sx={{textAlign: "center"}}>{auth.userData.email}</Typography>
                     <Button
                       // component="a"
                       variant="outlined"

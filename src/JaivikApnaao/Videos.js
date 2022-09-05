@@ -6,12 +6,13 @@ import { videos } from "./CardComponents/VideosList";
 import VideoCard from "./CardComponents/VideoCard";
 
 const Videos = () => {
+
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
-
+  // console.log(localStorage.getItem('user'));
   // const theme = useTheme();
   return (
     <>

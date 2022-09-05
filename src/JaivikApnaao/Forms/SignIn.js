@@ -20,7 +20,6 @@ import SwipeableViews from "react-swipeable-views";
 import useSignInForm from "./CustomHooks/SignInCustHook";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-// import AuthFunc from "../AuthServices/AuthFunc";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,41 +57,7 @@ function a11yProps(index) {
 
 const SignIn = (props) => {
 
-  const navigate = useNavigate();
-
-  const [sent, setSent] = React.useState(false);
-
-  const signin = () => {
-    (async () =>{
-        await axios.post('http://localhost:5000/api/auth/login', inputs)
-            .then((result) => {
-              const token = result.data.token
-              localStorage.setItem('user', JSON.stringify(token));
-              console.log(token);
-
-              (async () =>{
-                const loginToken = {
-                  headers: {
-                  'Authorization': token,
-                  },
-                }
-                await axios.get('http://localhost:5000/api/auth/profile', loginToken)
-                  .then((result) => {
-                    console.log("user: ", result);
-                    props.setIsLogin(true);
-                    props.userdata(result.data);
-                    navigate('/');
-                  }).catch((err) => {
-                    console.log(err.message);
-                  });
-              })();
-              
-            }).catch((err) => {
-              console.log(err.message);
-            });
-      })();
-  }
-  const {inputs, SignInFormSubmit, SignInFormChange} = useSignInForm(signin); 
+  const {inputs, SignInFormSubmit, SignInFormChange} = useSignInForm(); 
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);

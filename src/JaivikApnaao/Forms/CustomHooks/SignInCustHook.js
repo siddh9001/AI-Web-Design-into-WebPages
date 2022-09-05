@@ -1,12 +1,18 @@
 import React, {useState} from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthServices/AuthFunc";
 
-const useSignInForm = (callback) =>{
+const useSignInForm = () =>{
+    const navigate = useNavigate();
+    const auth = useAuth();
     const [inputs, setInputs] = useState({});
 
     //if the signIn form is submitted 
     const SignInFormSubmit = (event) => {
         if(event) event.preventDefault();
-        callback();
+        console.log("SignIpHooksInpts : ", inputs);
+        auth.signin(inputs);
+        navigate('/');
     }
 
     //if input values of signIn form is changed
