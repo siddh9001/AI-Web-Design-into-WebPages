@@ -4,9 +4,13 @@
 // import { Todos } from "./MyComponents/Todos";
 // import { AddTodo } from "./MyComponents/AddTodo";
 //import { Components } from "./ComponentsPractice/Components";
-// import React,{ useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
+import HomePage from "./ComponentsPractice/HomePage";
+import ResponsiveLanding from "./ComponentsPractice/ResponsiveLanding";
 
-import JaivikApnaoHome from "./JaivikApnaao/JaivikApnaoHome";
+// import JaivikApnaoHome from "./JaivikApnaao/JaivikApnaoHome";
+// import EmployeeHome from "./EmployeeMgmt/EmployeeHome";
+import ProductCard from "./ComponentsPractice/NavBar";
 
 function App() {
   // let initTodo;
@@ -21,7 +25,7 @@ function App() {
 
   //   setTodos(todos.filter((e)=>{
   //       return e !== todo;
-  //   })); 
+  //   }));
 
   //   localStorage.setItem("todos", JSON.stringify(todos));
   // }
@@ -42,7 +46,7 @@ function App() {
   //   };
   //   setTodos([...todos, myTodo]);
   //   console.log(myTodo);
-    
+
   // }
   // const [todos, setTodos] = useState(initTodo);
   // useEffect(()=>{localStorage.setItem("todos", JSON.stringify(todos));},[todos]);
@@ -52,7 +56,28 @@ function App() {
       <AddTodo addTodo={addTodo}/>
       <Todos todos={todos} onDelete={onDelete}/>
       <Footer/> */}
-      <JaivikApnaoHome/>
+      {/* <JaivikApnaoHome/> */}
+      {/* <EmployeeHome /> */}
+      {/* <NavBar /> */}
+      {/* <div>
+        <ProductCard
+          name="Product 1"
+          description="This is a description of product 1."
+          imageUrl="https://picsum.photos/id/1/200/300"
+        />
+        <ProductCard
+          name="Product 2"
+          description="This is a description of product 2."
+          imageUrl="https://picsum.photos/id/2/200/300"
+        />
+        <ProductCard
+          name="Product 3"
+          description="This is a description of product 3."
+          imageUrl="https://picsum.photos/id/3/200/300"
+        />
+      </div> */}
+      {/* <HomePage /> */}
+      <ResponsiveLanding />
     </>
   );
 }

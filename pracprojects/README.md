@@ -1,0 +1,1 @@
+This repo consists of web pages that are created with the help of web designs that are generated using text-to-image converting AI like Midjourney and BlueWillow. These WebPages are created using React and TailwindCSS.
